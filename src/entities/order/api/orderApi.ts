@@ -2,7 +2,7 @@ import type { Order, CreateOrderDto } from '../model/types';
 import { storageService } from '../../../shared/api/storage';
 import { mockNetworkDelay } from '../../../shared/api/baseApi';
 
-const STORAGE_KEY = 'kitap_all_orders_v2';
+const STORAGE_KEY = 'kitap_all_orders_v3';
 
 const INITIAL_ORDERS_SEED: Order[] = [
   {
@@ -10,22 +10,11 @@ const INITIAL_ORDERS_SEED: Order[] = [
     userId: 'user-client-1',
     items: [
       {
-        book: {
-          id: 'book-1',
-          title: 'Абай жолы (4 томдық)',
-          author: 'Мұхтар Әуезов',
-          price: 12500,
-          coverImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80',
-          description: '',
-          genre: 'kazakh_classics',
-          language: 'kz',
-          stock: 20,
-          rating: 4.9,
-          reviewsCount: 128,
-          publicationYear: 2021,
-          pages: 1420,
-          isbn: '978-601-04-1234-5',
-        },
+        bookId: 'book-1',
+        title: 'Абай жолы (4 томдық)',
+        author: 'Мұхтар Әуезов',
+        coverImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80',
+        priceAtOrder: 12500,
         quantity: 1,
       },
     ],

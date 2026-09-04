@@ -1,15 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CartItem } from './types';
+import type { CartItem, PopulatedCartItem } from './types';
 import type { Book } from '../../book';
 
 interface CartState {
   items: CartItem[];
-  addItem: (book: Book, quantity?: number) => void;
+  addItem: (bookId: string, quantity?: number, maxStock?: number) => void;
   removeItem: (bookId: string) => void;
-  updateQuantity: (bookId: string, quantity: number) => void;
+  updateQuantity: (bookId: string, quantity: number, maxStock?: number) => void;
   clearCart: () => void;
-  getTotalPrice: () => number;
   getTotalCount: () => number;
 }
 
@@ -18,62 +17,97 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (book, quantity = 1) => {
+      addItem: (bookId, quantity = 1, maxStock = 999) => {
         const { items } = get();
-        const existingItem = items.find((item) => item.book.id === book.id);
+        const existing = items.find((i) => i.bookId === bookId);
 
-        if (existingItem) {
-          const newQty = Math.min(existingItem.quantity + quantity, book.stock);
+        if (existing) {
+          const newQty = Math.min(existing.quantity + quantity, maxStock);
           set({
-            items: items.map((item) =>
-              item.book.id === book.id
-                ? { ...item, quantity: newQty }
-                : item
+            items: items.map((i) =>
+              i.bookId === bookId ? { ...i, quantity: newQty } : i
             ),
           });
         } else {
           set({
-            items: [...items, { book, quantity: Math.min(quantity, book.stock) }],
+            items: [...items, { bookId, quantity: Math.min(quantity, maxStock) }],
           });
         }
       },
 
       removeItem: (bookId) => {
         set({
-          items: get().items.filter((item) => item.book.id !== bookId),
+          items: get().items.filter((i) => i.bookId !== bookId),
         });
       },
 
-      updateQuantity: (bookId, quantity) => {
+      updateQuantity: (bookId, quantity, maxStock = 999) => {
         if (quantity <= 0) {
           get().removeItem(bookId);
           return;
         }
 
         set({
-          items: get().items.map((item) =>
-            item.book.id === bookId
-              ? { ...item, quantity: Math.min(quantity, item.book.stock) }
-              : item
+          items: get().items.map((i) =>
+            i.bookId === bookId
+              ? { ...i, quantity: Math.min(quantity, maxStock) }
+              : i
           ),
         });
       },
 
       clearCart: () => set({ items: [] }),
 
-      getTotalPrice: () => {
-        return get().items.reduce(
-          (total, item) => total + item.book.price * item.quantity,
-          0
-        );
-      },
-
       getTotalCount: () => {
-        return get().items.reduce((total, item) => total + item.quantity, 0);
+        return get().items.reduce((total, i) => total + i.quantity, 0);
       },
     }),
     {
-      name: 'kitap_all_cart_v2',
+      name: 'kitap_all_cart_v3',
+      version: 1,
+      migrate: (persistedState: unknown, version: number) => {
+        if (version === 0 && persistedState && typeof persistedState === 'object') {
+          // Migration from old unnormalized format: items had { book: { id }, quantity }
+          const state = persistedState as { items?: Array<{ book?: { id?: string }; bookId?: string; quantity?: number }> };
+          const migratedItems: CartItem[] = (state.items || []).map((item) => ({
+            bookId: item.bookId || item.book?.id || '',
+            quantity: item.quantity || 1,
+          })).filter((i) => Boolean(i.bookId));
+
+          return { items: migratedItems };
+        }
+        return persistedState as CartState;
+      },
     }
   )
 );
+
+/**
+ * Selector to populate normalized cart items with live Book entity data.
+ */
+export function getPopulatedCart(cartItems: CartItem[], catalogBooks: Book[]): {
+  populatedItems: PopulatedCartItem[];
+  totalPrice: number;
+  totalCount: number;
+} {
+  const populatedItems: PopulatedCartItem[] = [];
+  let totalPrice = 0;
+  let totalCount = 0;
+
+  for (const item of cartItems) {
+    const book = catalogBooks.find((b) => b.id === item.bookId);
+    if (book) {
+      const subtotal = book.price * item.quantity;
+      totalPrice += subtotal;
+      totalCount += item.quantity;
+      populatedItems.push({
+        bookId: item.bookId,
+        quantity: item.quantity,
+        book,
+        subtotal,
+      });
+    }
+  }
+
+  return { populatedItems, totalPrice, totalCount };
+}

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Wallet, QrCode } from 'lucide-react';
-import { useCartStore } from '../../../../entities/cart';
+import { useCartStore, getPopulatedCart } from '../../../../entities/cart';
 import { useAuthStore } from '../../../../entities/user';
 import { useBookStore } from '../../../../entities/book';
-import { useOrderStore } from '../../../../entities/order';
 import type { PaymentMethod } from '../../../../entities/order';
+import { useCheckout } from '../model/useCheckout';
 import { Modal } from '../../../../shared/ui/Modal';
 import { Input } from '../../../../shared/ui/Input';
 import { Button } from '../../../../shared/ui/Button';
@@ -21,61 +21,39 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { items, clearCart, getTotalPrice } = useCartStore();
-  const { user, updateBalance } = useAuthStore();
-  const decreaseStock = useBookStore((state) => state.decreaseStock);
-  const createOrder = useOrderStore((state) => state.createOrder);
+  const cartItems = useCartStore((state) => state.items);
+  const catalogBooks = useBookStore((state) => state.books);
+  const user = useAuthStore((state) => state.user);
+  const { placeOrder, isSubmitting, error, clearError } = useCheckout();
 
   const [deliveryAddress, setDeliveryAddress] = useState('г. Алматы, пр. Достык 12, кв. 45');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('wallet');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const totalPrice = getTotalPrice();
+  const { totalPrice } = getPopulatedCart(cartItems, catalogBooks);
   const userBalance = user?.balance || 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage('');
-
-    if (paymentMethod === 'wallet' && userBalance < totalPrice) {
-      setErrorMessage(
-        `Недостаточно средств. Баланс: ${formatKZT(userBalance)}. Сумма заказа: ${formatKZT(totalPrice)}`
-      );
-      return;
-    }
-
-    setIsSubmitting(true);
     try {
-      for (const item of items) {
-        await decreaseStock(item.book.id, item.quantity);
-      }
-
-      if (paymentMethod === 'wallet') {
-        updateBalance(-totalPrice);
-      }
-
-      const newOrder = await createOrder({
-        userId: user?.id || 'guest-user',
-        items: [...items],
-        totalPrice,
+      const order = await placeOrder({
         deliveryAddress,
         paymentMethod,
       });
-
-      clearCart();
-      onSuccess(newOrder.id);
+      onSuccess(order.id);
     } catch {
-      setErrorMessage('Не удалось оформить заказ. Попробуйте снова.');
-    } finally {
-      setIsSubmitting(false);
+      // error is handled inside useCheckout
     }
+  };
+
+  const handleClose = () => {
+    clearError();
+    onClose();
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title="Оформление заказа"
       maxWidth="md"
     >
@@ -88,7 +66,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         />
 
         <div>
-          <label className="block text-xs font-semibold text-[#f0f6fc] mb-1.5">
+          <label className="block text-xs font-semibold text-gh-fg mb-1.5">
             Способ оплаты
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -97,15 +75,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               onClick={() => setPaymentMethod('wallet')}
               className={`p-2.5 rounded-md border text-left flex flex-col gap-0.5 transition-colors ${
                 paymentMethod === 'wallet'
-                  ? 'border-[#388bfd] bg-[#21262d]'
-                  : 'border-[#30363d] bg-[#0d1117] hover:bg-[#161b22]'
+                  ? 'border-gh-accent bg-gh-overlay'
+                  : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
               }`}
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#f0f6fc]">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gh-fg">
                 <Wallet className="w-3.5 h-3.5" />
                 <span>Kaspi Кошелек</span>
               </div>
-              <span className="text-[11px] text-[#8d96a0]">
+              <span className="text-[11px] text-gh-muted">
                 {formatKZT(userBalance)}
               </span>
             </button>
@@ -115,34 +93,34 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               onClick={() => setPaymentMethod('kaspi_qr')}
               className={`p-2.5 rounded-md border text-left flex flex-col gap-0.5 transition-colors ${
                 paymentMethod === 'kaspi_qr'
-                  ? 'border-[#388bfd] bg-[#21262d]'
-                  : 'border-[#30363d] bg-[#0d1117] hover:bg-[#161b22]'
+                  ? 'border-gh-accent bg-gh-overlay'
+                  : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
               }`}
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#f0f6fc]">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gh-fg">
                 <QrCode className="w-3.5 h-3.5" />
                 <span>Kaspi QR</span>
               </div>
-              <span className="text-[11px] text-[#8d96a0]">
+              <span className="text-[11px] text-gh-muted">
                 Быстрая оплата
               </span>
             </button>
           </div>
         </div>
 
-        {errorMessage && (
-          <div className="border border-[#da3633] bg-[#da3633]/15 text-[#f85149] text-xs p-2.5 rounded-md">
-            {errorMessage}
+        {error && (
+          <div className="border border-gh-danger-border bg-gh-danger-bg text-gh-danger text-xs p-2.5 rounded-md">
+            {error}
           </div>
         )}
 
-        <div className="bg-[#0d1117] border border-[#30363d] p-2.5 rounded-md text-xs flex justify-between font-semibold text-[#f0f6fc]">
+        <div className="bg-gh-canvas border border-gh-border p-2.5 rounded-md text-xs flex justify-between font-semibold text-gh-fg">
           <span>Сумма списания:</span>
           <span className="font-mono">{formatKZT(totalPrice)}</span>
         </div>
 
         <div className="pt-2 flex justify-end gap-2">
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button type="button" variant="secondary" onClick={handleClose}>
             Отмена
           </Button>
           <Button type="submit" variant="primary" isLoading={isSubmitting}>

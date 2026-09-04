@@ -17,14 +17,14 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const cartItems = useCartStore((state) => state.items);
   const [justAdded, setJustAdded] = useState(false);
 
-  const cartItem = cartItems.find((item) => item.book.id === book.id);
+  const cartItem = cartItems.find((item) => item.bookId === book.id);
   const isInCart = Boolean(cartItem);
   const isOutOfStock = book.stock <= 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isOutOfStock) return;
-    addItem(book, 1);
+    addItem(book.id, 1, book.stock);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1200);
   };
@@ -38,9 +38,9 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       className="shrink-0 text-xs"
     >
       {justAdded ? (
-        <Check className="w-3.5 h-3.5 text-[#3fb950]" />
+        <Check className="w-3.5 h-3.5 text-gh-success" />
       ) : isInCart ? (
-        <span className="text-xs font-medium text-[#58a6ff]">
+        <span className="text-xs font-medium text-gh-accent">
           В корзине ({cartItem?.quantity})
         </span>
       ) : (
