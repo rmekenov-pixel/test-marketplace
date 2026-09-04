@@ -9,6 +9,19 @@ export interface OrderCardProps {
 }
 
 export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
+  const getPaymentLabel = (method: Order['paymentMethod']) => {
+    switch (method) {
+      case 'kaspi_qr':
+        return 'Kaspi QR';
+      case 'card':
+        return 'Банковская карта';
+      case 'cash_on_delivery':
+        return 'При получении';
+      default:
+        return 'Kaspi Pay';
+    }
+  };
+
   return (
     <div className="bg-gh-subtle rounded-md border border-gh-border p-4 shadow-gh-sm space-y-3">
       {/* Header */}
@@ -60,11 +73,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
           </div>
           <div className="flex items-center gap-1">
             <CreditCard className="w-3.5 h-3.5 text-gh-muted" />
-            <span>
-              {order.paymentMethod === 'wallet'
-                ? 'Kaspi Кошелек'
-                : 'Kaspi QR'}
-            </span>
+            <span>{getPaymentLabel(order.paymentMethod)}</span>
           </div>
         </div>
 

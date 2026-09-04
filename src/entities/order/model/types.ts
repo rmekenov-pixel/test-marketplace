@@ -1,5 +1,5 @@
 export type OrderStatus = 'pending' | 'processing' | 'delivered' | 'cancelled';
-export type PaymentMethod = 'wallet' | 'kaspi_qr' | 'card';
+export type PaymentMethod = 'kaspi_qr' | 'card' | 'cash_on_delivery';
 
 /**
  * Historical snapshot of an ordered book item.

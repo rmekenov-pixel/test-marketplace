@@ -10,7 +10,6 @@ interface AuthState {
 
   login: (role: UserRole, customUser?: Partial<User>) => void;
   logout: () => void;
-  updateBalance: (delta: number) => void;
   setRole: (role: UserRole) => void;
   verifySession: () => boolean;
 }
@@ -20,7 +19,6 @@ const DEFAULT_CLIENT: User = {
   name: 'Арыстан Мекен',
   email: 'arystan@kitapall.kz',
   role: 'client',
-  balance: 35000,
   phone: '+7 777 123 4567',
 };
 
@@ -29,7 +27,6 @@ const DEFAULT_ADMIN: User = {
   name: 'Администратор Kitap All',
   email: 'admin@kitapall.kz',
   role: 'admin',
-  balance: 1500000,
   phone: '+7 700 987 6543',
 };
 
@@ -68,15 +65,6 @@ export const useAuthStore = create<AuthState>()(
           role: 'client',
           isAuthenticated: false,
           sessionToken: null,
-        });
-      },
-
-      updateBalance: (delta) => {
-        const { user } = get();
-        if (!user) return;
-        const newBalance = Math.max(0, user.balance + delta);
-        set({
-          user: { ...user, balance: newBalance },
         });
       },
 

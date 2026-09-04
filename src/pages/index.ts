@@ -3,7 +3,6 @@ export * from './login';
 export * from './catalog';
 export * from './cart';
 export * from './orders';
-export * from './wallet';
 export * from './client-dashboard';
 export * from './admin-dashboard';
 export * from './admin-catalog';

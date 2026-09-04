@@ -22,7 +22,7 @@ const INITIAL_ORDERS_SEED: Order[] = [
     status: 'delivered',
     createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
     deliveryAddress: 'г. Алматы, пр. Абая 150, кв. 12',
-    paymentMethod: 'wallet',
+    paymentMethod: 'kaspi_qr',
   },
 ];
 

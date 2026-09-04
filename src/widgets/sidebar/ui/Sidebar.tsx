@@ -5,7 +5,6 @@ import {
   BookOpen,
   ShoppingBag,
   Clock,
-  Wallet,
   Package,
   BarChart3,
   Layers,
@@ -35,7 +34,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ type }) => {
     { to: ROUTES.CLIENT.CATALOG, label: 'Каталог книг', icon: BookOpen },
     { to: ROUTES.CLIENT.CART, label: 'Корзина', icon: ShoppingBag, badge: cartCount > 0 ? cartCount : undefined },
     { to: ROUTES.CLIENT.ORDERS, label: 'Мои заказы', icon: Clock },
-    { to: ROUTES.CLIENT.WALLET, label: 'Kaspi Кошелек', icon: Wallet },
   ];
 
   const adminLinks: SidebarLinkItem[] = [
@@ -49,9 +47,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ type }) => {
 
   return (
     <aside className="w-56 shrink-0 hidden md:block">
-      <div className="bg-[#161b22] rounded-md border border-[#30363d] p-2 sticky top-18 shadow-gh">
-        <div className="px-3 py-2 mb-1 border-b border-[#30363d]">
-          <span className="text-xs font-semibold text-[#f0f6fc]">
+      <div className="bg-gh-subtle rounded-md border border-gh-border p-2 sticky top-18 shadow-gh">
+        <div className="px-3 py-2 mb-1 border-b border-gh-border">
+          <span className="text-xs font-semibold text-gh-fg">
             {effectiveType === 'admin' ? 'Администрирование' : 'Меню пользователя'}
           </span>
         </div>
@@ -66,17 +64,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ type }) => {
                 className={({ isActive }) =>
                   `flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-[#21262d] text-[#f0f6fc] font-semibold border border-[#30363d]'
-                      : 'text-[#8d96a0] hover:bg-[#21262d] hover:text-[#f0f6fc]'
+                      ? 'bg-gh-overlay text-gh-fg font-semibold border border-gh-border'
+                      : 'text-gh-muted hover:bg-gh-overlay hover:text-gh-fg'
                   }`
                 }
               >
                 <div className="flex items-center gap-2">
-                  <Icon className="w-3.5 h-3.5 text-[#8d96a0]" />
+                  <Icon className="w-3.5 h-3.5 text-gh-muted" />
                   <span>{link.label}</span>
                 </div>
                 {link.badge !== undefined && (
-                  <span className="border border-[#30363d] bg-[#21262d] text-[#f0f6fc] text-[10px] font-mono px-1.5 py-0.2 rounded-full">
+                  <span className="border border-gh-border bg-gh-overlay text-gh-fg text-[10px] font-mono px-1.5 py-0.2 rounded-full">
                     {link.badge}
                   </span>
                 )}

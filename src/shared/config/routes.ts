@@ -6,7 +6,6 @@ export const ROUTES = {
     CART: '/client/cart',
     DASHBOARD: '/client/dashboard',
     ORDERS: '/client/orders',
-    WALLET: '/client/wallet',
   },
   ADMIN: {
     DASHBOARD: '/admin/dashboard',

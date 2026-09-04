@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Wallet, QrCode } from 'lucide-react';
+import { QrCode, CreditCard, Banknote } from 'lucide-react';
 import { useCartStore, getPopulatedCart } from '../../../../entities/cart';
-import { useAuthStore } from '../../../../entities/user';
 import { useBookStore } from '../../../../entities/book';
 import type { PaymentMethod } from '../../../../entities/order';
 import { useCheckout } from '../model/useCheckout';
@@ -23,14 +22,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 }) => {
   const cartItems = useCartStore((state) => state.items);
   const catalogBooks = useBookStore((state) => state.books);
-  const user = useAuthStore((state) => state.user);
   const { placeOrder, isSubmitting, error, clearError } = useCheckout();
 
   const [deliveryAddress, setDeliveryAddress] = useState('г. Алматы, пр. Достык 12, кв. 45');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('wallet');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('kaspi_qr');
 
   const { totalPrice } = getPopulatedCart(cartItems, catalogBooks);
-  const userBalance = user?.balance || 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +38,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       });
       onSuccess(order.id);
     } catch {
-      // error is handled inside useCheckout
+      // error is handled in useCheckout
     }
   };
 
@@ -62,6 +59,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           label="Адрес доставки"
           value={deliveryAddress}
           onChange={(e) => setDeliveryAddress(e.target.value)}
+          placeholder="Город, улица, дом, квартира"
           required
         />
 
@@ -69,29 +67,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           <label className="block text-xs font-semibold text-gh-fg mb-1.5">
             Способ оплаты
           </label>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setPaymentMethod('wallet')}
-              className={`p-2.5 rounded-md border text-left flex flex-col gap-0.5 transition-colors ${
-                paymentMethod === 'wallet'
-                  ? 'border-gh-accent bg-gh-overlay'
-                  : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
-              }`}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-gh-fg">
-                <Wallet className="w-3.5 h-3.5" />
-                <span>Kaspi Кошелек</span>
-              </div>
-              <span className="text-[11px] text-gh-muted">
-                {formatKZT(userBalance)}
-              </span>
-            </button>
-
+          <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => setPaymentMethod('kaspi_qr')}
-              className={`p-2.5 rounded-md border text-left flex flex-col gap-0.5 transition-colors ${
+              className={`p-2.5 rounded-md border text-left flex flex-col gap-1 transition-colors ${
                 paymentMethod === 'kaspi_qr'
                   ? 'border-gh-accent bg-gh-overlay'
                   : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
@@ -101,8 +81,44 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <QrCode className="w-3.5 h-3.5" />
                 <span>Kaspi QR</span>
               </div>
-              <span className="text-[11px] text-gh-muted">
+              <span className="text-[10px] text-gh-muted">
                 Быстрая оплата
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('card')}
+              className={`p-2.5 rounded-md border text-left flex flex-col gap-1 transition-colors ${
+                paymentMethod === 'card'
+                  ? 'border-gh-accent bg-gh-overlay'
+                  : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gh-fg">
+                <CreditCard className="w-3.5 h-3.5" />
+                <span>Карта</span>
+              </div>
+              <span className="text-[10px] text-gh-muted">
+                Visa / MasterCard
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('cash_on_delivery')}
+              className={`p-2.5 rounded-md border text-left flex flex-col gap-1 transition-colors ${
+                paymentMethod === 'cash_on_delivery'
+                  ? 'border-gh-accent bg-gh-overlay'
+                  : 'border-gh-border bg-gh-canvas hover:bg-gh-subtle'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gh-fg">
+                <Banknote className="w-3.5 h-3.5" />
+                <span>Наличными</span>
+              </div>
+              <span className="text-[10px] text-gh-muted">
+                Курьеру
               </span>
             </button>
           </div>
@@ -115,7 +131,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         )}
 
         <div className="bg-gh-canvas border border-gh-border p-2.5 rounded-md text-xs flex justify-between font-semibold text-gh-fg">
-          <span>Сумма списания:</span>
+          <span>Сумма к оплате:</span>
           <span className="font-mono">{formatKZT(totalPrice)}</span>
         </div>
 

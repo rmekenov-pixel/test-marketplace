@@ -7,7 +7,6 @@ import { LoginPage } from '../../pages/login';
 import { CatalogPage } from '../../pages/catalog';
 import { CartPage } from '../../pages/cart';
 import { OrdersPage } from '../../pages/orders';
-import { WalletPage } from '../../pages/wallet';
 import { ClientDashboardPage } from '../../pages/client-dashboard';
 import { AdminDashboardPage } from '../../pages/admin-dashboard';
 import { AdminCatalogPage } from '../../pages/admin-catalog';
@@ -52,14 +51,6 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute allowedRoles={['client']}>
                 <OrdersPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'wallet',
-            element: (
-              <ProtectedRoute allowedRoles={['client']}>
-                <WalletPage />
               </ProtectedRoute>
             ),
           },
