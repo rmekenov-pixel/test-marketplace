@@ -3,6 +3,7 @@ import { MapPin, CreditCard } from 'lucide-react';
 import type { Order } from '../model/types';
 import { OrderStatusBadge } from './OrderStatusBadge';
 import { formatKZT, formatDate } from '../../../shared/lib/format';
+import { APP_CONFIG } from '../../../shared/config/constants';
 
 export interface OrderCardProps {
   order: Order;
@@ -44,9 +45,12 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         {order.items.map((item) => (
           <div key={item.bookId} className="flex items-center gap-3">
             <img
-              src={item.coverImage}
+              src={item.coverImage || APP_CONFIG.DEFAULT_BOOK_COVER}
               alt={item.title}
               className="w-10 aspect-[3/4] object-cover rounded border border-gh-border shrink-0"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = APP_CONFIG.DEFAULT_BOOK_COVER;
+              }}
             />
             <div className="flex-1 min-w-0">
               <h4 className="text-xs font-semibold text-gh-fg truncate">

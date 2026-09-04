@@ -2,6 +2,7 @@ import React from 'react';
 import type { Book } from '../model/types';
 import { Modal } from '../../../shared/ui/Modal';
 import { formatKZT } from '../../../shared/lib/format';
+import { APP_CONFIG } from '../../../shared/config/constants';
 
 export interface BookDetailModalProps {
   book: Book | null;
@@ -28,9 +29,12 @@ export const BookDetailModal: React.FC<BookDetailModalProps> = ({
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <img
-            src={book.coverImage}
+            src={book.coverImage || APP_CONFIG.DEFAULT_BOOK_COVER}
             alt={book.title}
             className="w-full sm:w-36 aspect-[3/4] object-cover rounded-md border border-[#30363d] shrink-0"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = APP_CONFIG.DEFAULT_BOOK_COVER;
+            }}
           />
           <div className="space-y-1.5 flex-1">
             <span className="text-[11px] font-mono text-[#8d96a0] uppercase">

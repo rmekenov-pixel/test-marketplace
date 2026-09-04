@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Book } from '../model/types';
 import { formatKZT } from '../../../shared/lib/format';
+import { APP_CONFIG } from '../../../shared/config/constants';
 
 export interface BookCardBaseProps {
   book: Book;
@@ -24,10 +25,13 @@ export const BookCardBase: React.FC<BookCardBaseProps> = ({
         {/* Cover image (Full natural color) */}
         <div className="relative aspect-[3/4] w-full bg-[#0d1117] border border-[#30363d] rounded-md overflow-hidden mb-3">
           <img
-            src={book.coverImage}
+            src={book.coverImage || APP_CONFIG.DEFAULT_BOOK_COVER}
             alt={book.title}
             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-150"
             loading="lazy"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = APP_CONFIG.DEFAULT_BOOK_COVER;
+            }}
           />
 
           {book.language === 'kz' && (

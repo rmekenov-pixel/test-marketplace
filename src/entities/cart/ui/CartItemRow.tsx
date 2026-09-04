@@ -1,6 +1,7 @@
 import React from 'react';
 import type { PopulatedCartItem } from '../model/types';
 import { formatKZT } from '../../../shared/lib/format';
+import { APP_CONFIG } from '../../../shared/config/constants';
 
 export interface CartItemRowProps {
   item: PopulatedCartItem;
@@ -16,9 +17,12 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
   return (
     <div className="bg-gh-subtle rounded-md border border-gh-border p-3 shadow-gh-sm flex items-center gap-3">
       <img
-        src={book.coverImage}
+        src={book.coverImage || APP_CONFIG.DEFAULT_BOOK_COVER}
         alt={book.title}
         className="w-12 aspect-[3/4] object-cover rounded border border-gh-border shrink-0"
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).src = APP_CONFIG.DEFAULT_BOOK_COVER;
+        }}
       />
 
       <div className="flex-1 min-w-0">
