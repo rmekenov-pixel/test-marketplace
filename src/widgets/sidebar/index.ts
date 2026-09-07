@@ -1,1 +1,2 @@
-export * from './ui/Sidebar';
+export * from './Sidebar';
+export * from './GlobalSidebar';

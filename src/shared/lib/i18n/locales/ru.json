@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "profile": "Профиль",
+    "dashboard": "Личный кабинет",
+    "admin": "Админ-панель",
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "cart": "Корзина"
+  },
+  "auth": {
+    "titleLogin": "Вход в систему",
+    "titleRegister": "Создание аккаунта",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Ваше имя",
+    "confirmPassword": "Подтверждение пароля",
+    "submitLogin": "Войти",
+    "submitRegister": "Зарегистрироваться",
+    "noAccount": "Еще нет аккаунта?",
+    "hasAccount": "Уже зарегистрированы?",
+    "role": "Роль доступа",
+    "loginSuccess": "Вы успешно вошли в систему",
+    "registerSuccess": "Аккаунт успешно создан",
+    "logoutSuccess": "Вы вышли из системы",
+    "invalidCredentials": "Неверный логин или пароль"
+  },
+  "catalog": {
+    "title": "Каталог товаров",
+    "subtitle": "Широкий выбор книг, классики и современной литературы",
+    "search": "Поиск по названию, автору или ISBN...",
+    "filter": "Фильтры",
+    "sort": "Сортировка",
+    "noResults": "По вашему запросу ничего не найдено",
+    "allCategories": "Все категории",
+    "inStockOnly": "Только в наличии",
+    "popular": "По популярности",
+    "priceAsc": "Сначала дешевле",
+    "priceDesc": "Сначала дороже",
+    "rating": "По рейтингу",
+    "newest": "Новинки"
+  },
+  "product": {
+    "addToCart": "В корзину",
+    "addedToCart": "Добавлено в корзину",
+    "inStock": "В наличии",
+    "outOfStock": "Нет в наличии",
+    "price": "Цена",
+    "description": "Описание",
+    "characteristics": "Характеристики",
+    "author": "Автор",
+    "genre": "Жанр",
+    "publicationYear": "Год издания",
+    "pages": "Страниц",
+    "isbn": "ISBN",
+    "reviews": "отзывов",
+    "backToCatalog": "Назад в каталог"
+  },
+  "dashboard": {
+    "client": {
+      "title": "Кабинет покупателя",
+      "orders": "Мои заказы",
+      "favorites": "Избранное",
+      "settings": "Настройки",
+      "profile": "Личные данные",
+      "recentOrders": "История покупок",
+      "emptyOrders": "У вас пока нет оформленных заказов"
+    },
+    "admin": {
+      "title": "Панель администратора",
+      "overview": "Обзор",
+      "products": "Товары",
+      "users": "Пользователи",
+      "orders": "Заказы",
+      "stats": "Аналитика",
+      "addProduct": "Добавить товар",
+      "editProduct": "Редактировать",
+      "deleteProduct": "Удалить",
+      "totalRevenue": "Общая выручка",
+      "totalOrders": "Всего заказов",
+      "activeUsers": "Пользователи"
+    }
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "confirm": "Подтвердить",
+    "close": "Закрыть",
+    "kzt": "₸",
+    "actions": "Действия",
+    "status": "Статус",
+    "date": "Дата",
+    "qty": "Кол-во",
+    "total": "Итого"
+  }
+}

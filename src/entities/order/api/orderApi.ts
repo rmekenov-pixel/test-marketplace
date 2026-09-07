@@ -1,6 +1,7 @@
-import type { Order, CreateOrderDto } from '../model/types';
+import type { Order, CreateOrderDto, OrderItem } from '../model/types';
 import { storageService } from '../../../shared/api/storage';
 import { mockNetworkDelay } from '../../../shared/api/baseApi';
+import { sanitizeId, sanitizeInput, sanitizePrice, sanitizeQuantity, sanitizeUrl } from '../../../shared/lib/security';
 
 const STORAGE_KEY = 'kitap_all_orders_v3';
 
@@ -34,16 +35,36 @@ export const orderApi = {
 
   async getByUserId(userId: string): Promise<Order[]> {
     await mockNetworkDelay();
+    const cleanUserId = sanitizeId(userId);
     const orders = storageService.get<Order[]>(STORAGE_KEY, INITIAL_ORDERS_SEED);
-    return orders.filter((o) => o.userId === userId);
+    return orders.filter((o) => o.userId === cleanUserId);
   },
 
   async create(dto: CreateOrderDto): Promise<Order> {
     await mockNetworkDelay();
     const orders = storageService.get<Order[]>(STORAGE_KEY, INITIAL_ORDERS_SEED);
+
+    const cleanItems: OrderItem[] = (dto.items || []).map((item) => ({
+      bookId: sanitizeId(item.bookId),
+      title: sanitizeInput(item.title),
+      author: sanitizeInput(item.author),
+      coverImage: sanitizeUrl(item.coverImage),
+      priceAtOrder: sanitizePrice(item.priceAtOrder),
+      quantity: sanitizeQuantity(item.quantity),
+    })).filter((item) => Boolean(item.bookId));
+
+    const calculatedTotal = cleanItems.reduce(
+      (sum, item) => sum + item.priceAtOrder * item.quantity,
+      0
+    );
+
     const newOrder: Order = {
-      ...dto,
       id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      userId: sanitizeId(dto.userId),
+      items: cleanItems,
+      totalPrice: sanitizePrice(dto.totalPrice || calculatedTotal),
+      deliveryAddress: sanitizeInput(dto.deliveryAddress),
+      paymentMethod: dto.paymentMethod || 'kaspi_qr',
       status: 'processing',
       createdAt: new Date().toISOString(),
     };

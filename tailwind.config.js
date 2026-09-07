@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,61 +8,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        gh: {
-          canvas: '#0d1117',
-          subtle: '#161b22',
-          overlay: '#21262d',
-          inset: '#010409',
-          border: '#30363d',
-          'border-muted': '#21262d',
-          fg: '#f0f6fc',
-          muted: '#8d96a0',
-          subtle_fg: '#6e7681',
-          accent: '#58a6ff',
-          'accent-hover': '#2f81f7',
-          success: '#3fb950',
-          'success-bg': 'rgba(35, 134, 54, 0.15)',
-          'success-border': 'rgba(46, 160, 67, 0.4)',
-          danger: '#f85149',
-          'danger-bg': 'rgba(218, 54, 51, 0.15)',
-          'danger-border': 'rgba(218, 54, 51, 0.4)',
-          'btn-primary-bg': '#238636',
-          'btn-primary-hover': '#2ea043',
-          'btn-primary-border': '#2ea043',
-          'btn-secondary-bg': '#21262d',
-          'btn-secondary-hover': '#30363d',
-          'btn-secondary-border': '#30363d',
+        primary: {
+          DEFAULT: '#0284c7', // Sky-600
+          hover: '#0369a1',
+          dark: '#38bdf8',
         },
-      },
-      borderRadius: {
-        DEFAULT: '6px',
-        sm: '4px',
-        md: '6px',
-        lg: '6px',
-        xl: '6px',
-        '2xl': '6px',
-        '3xl': '6px',
-        full: '9999px',
-      },
-      boxShadow: {
-        'gh': '0 1px 3px rgba(0, 0, 0, 0.4)',
-        'gh-sm': '0 1px 0 rgba(240, 246, 252, 0.04)',
+        surface: {
+          light: '#ffffff',
+          dark: '#0f172a',
+          elevatedLight: '#f8fafc',
+          elevatedDark: '#1e293b',
+        },
+        border: {
+          light: '#e2e8f0',
+          dark: '#334155',
+        }
       },
       fontFamily: {
         sans: [
+          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
           'system-ui',
           'sans-serif',
-        ],
-        mono: [
-          'ui-monospace',
-          'SFMono-Regular',
-          'SF Mono',
-          'Menlo',
-          'Consolas',
-          'monospace',
         ],
       },
     },

@@ -1,6 +1,39 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User, UserRole } from './types';
+import { sanitizeInput, sanitizeId } from '../../../shared/lib/security';
+
+export interface DemoAccount {
+  email: string;
+  name: string;
+  role: UserRole;
+  passwordHint: string;
+  description: string;
+}
+
+export const DEMO_ACCOUNTS: Record<string, DemoAccount> = {
+  admin: {
+    email: 'admin@qazaqmarket.kz',
+    name: 'Администратор QazaqMarket',
+    role: 'admin',
+    passwordHint: 'admin123',
+    description: 'Полный доступ к каталогу, заказам и аналитике',
+  },
+  seller: {
+    email: 'seller@qazaqmarket.kz',
+    name: 'Книжный Дом (Продавец)',
+    role: 'seller',
+    passwordHint: 'seller123',
+    description: 'Управление собственными товарами и заказами',
+  },
+  client: {
+    email: 'user@qazaqmarket.kz',
+    name: 'Арыстан Мекен',
+    role: 'client',
+    passwordHint: 'user123',
+    description: 'Покупка книг, избранное и история заказов',
+  },
+};
 
 interface AuthState {
   user: User | null;
@@ -14,20 +47,28 @@ interface AuthState {
   verifySession: () => boolean;
 }
 
-const DEFAULT_CLIENT: User = {
+export const DEFAULT_CLIENT: User = {
   id: 'user-client-1',
   name: 'Арыстан Мекен',
-  email: 'arystan@kitapall.kz',
+  email: 'user@qazaqmarket.kz',
   role: 'client',
   phone: '+7 777 123 4567',
 };
 
-const DEFAULT_ADMIN: User = {
+export const DEFAULT_ADMIN: User = {
   id: 'user-admin-1',
-  name: 'Администратор Kitap All',
-  email: 'admin@kitapall.kz',
+  name: 'Администратор QazaqMarket',
+  email: 'admin@qazaqmarket.kz',
   role: 'admin',
   phone: '+7 700 987 6543',
+};
+
+export const DEFAULT_SELLER: User = {
+  id: 'user-seller-1',
+  name: 'Книжный Дом (Продавец)',
+  email: 'seller@qazaqmarket.kz',
+  role: 'seller',
+  phone: '+7 701 555 7788',
 };
 
 function generateSessionToken(role: UserRole, userId: string): string {
@@ -38,22 +79,34 @@ function generateSessionToken(role: UserRole, userId: string): string {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      user: DEFAULT_CLIENT,
+      user: null,
       role: 'client',
-      isAuthenticated: true,
-      sessionToken: generateSessionToken('client', DEFAULT_CLIENT.id),
+      isAuthenticated: false,
+      sessionToken: null,
 
       login: (role, customUser) => {
-        const baseUser = role === 'admin' ? DEFAULT_ADMIN : DEFAULT_CLIENT;
+        const normRole = (role || 'client').toString().toLowerCase();
+        let baseUser = DEFAULT_CLIENT;
+        if (normRole === 'admin') {
+          baseUser = DEFAULT_ADMIN;
+        } else if (normRole === 'seller') {
+          baseUser = DEFAULT_SELLER;
+        }
+
         const finalUser: User = {
           ...baseUser,
-          ...customUser,
-          role,
+          ...(customUser ? {
+            ...(customUser.id && { id: sanitizeId(customUser.id) }),
+            ...(customUser.name && { name: sanitizeInput(customUser.name) }),
+            ...(customUser.email && { email: sanitizeInput(customUser.email) }),
+            ...(customUser.phone && { phone: sanitizeInput(customUser.phone) }),
+          } : {}),
+          role: normRole as UserRole,
         };
-        const token = generateSessionToken(role, finalUser.id);
+        const token = generateSessionToken(normRole as UserRole, finalUser.id);
         set({
           user: finalUser,
-          role,
+          role: normRole as UserRole,
           isAuthenticated: true,
           sessionToken: token,
         });
@@ -78,7 +131,8 @@ export const useAuthStore = create<AuthState>()(
         try {
           const decoded = atob(sessionToken);
           const [tokenUserId, tokenRole] = decoded.split(':');
-          return tokenUserId === user.id && tokenRole === role;
+          const normRole = (role || '').toString().toLowerCase();
+          return tokenUserId === user.id && tokenRole.toLowerCase() === normRole;
         } catch {
           get().logout();
           return false;
@@ -86,7 +140,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'kitap_all_auth_v3',
+      name: 'qazaqmarket_auth_v4',
       version: 1,
       migrate: (persistedState: unknown) => {
         return persistedState as AuthState;

@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "admin": "Admin Panel",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Log Out",
+    "cart": "Cart"
+  },
+  "auth": {
+    "titleLogin": "Sign In",
+    "titleRegister": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "confirmPassword": "Confirm Password",
+    "submitLogin": "Sign In",
+    "submitRegister": "Create Account",
+    "noAccount": "Do not have an account?",
+    "hasAccount": "Already registered?",
+    "role": "Access Role",
+    "loginSuccess": "Successfully logged in",
+    "registerSuccess": "Account created successfully",
+    "logoutSuccess": "Logged out",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "catalog": {
+    "title": "Product Catalog",
+    "subtitle": "Discover quality literature and books in Kazakhstan",
+    "search": "Search by title, author, or ISBN...",
+    "filter": "Filters",
+    "sort": "Sort",
+    "noResults": "No products match your criteria",
+    "allCategories": "All Categories",
+    "inStockOnly": "In Stock Only",
+    "popular": "Most Popular",
+    "priceAsc": "Price: Low to High",
+    "priceDesc": "Price: High to Low",
+    "rating": "Highest Rated",
+    "newest": "Newest"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "addedToCart": "Added to cart",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "price": "Price",
+    "description": "Description",
+    "characteristics": "Specifications",
+    "author": "Author",
+    "genre": "Category",
+    "publicationYear": "Publication Year",
+    "pages": "Pages",
+    "isbn": "ISBN",
+    "reviews": "reviews",
+    "backToCatalog": "Back to Catalog"
+  },
+  "dashboard": {
+    "client": {
+      "title": "Customer Dashboard",
+      "orders": "My Orders",
+      "favorites": "Wishlist",
+      "settings": "Settings",
+      "profile": "Personal Info",
+      "recentOrders": "Order History",
+      "emptyOrders": "You have no orders yet"
+    },
+    "admin": {
+      "title": "Admin Dashboard",
+      "overview": "Overview",
+      "products": "Products",
+      "users": "Users",
+      "orders": "Orders",
+      "stats": "Analytics",
+      "addProduct": "Add Product",
+      "editProduct": "Edit",
+      "deleteProduct": "Delete",
+      "totalRevenue": "Total Revenue",
+      "totalOrders": "Total Orders",
+      "activeUsers": "Active Users"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "kzt": "₸",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "qty": "Qty",
+    "total": "Total"
+  }
+}

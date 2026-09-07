@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { CartItem, PopulatedCartItem } from './types';
 import type { Book } from '../../book';
+import { sanitizeId, sanitizeQuantity, sanitizeStock } from '../../../shared/lib/security';
 
 interface CartState {
   items: CartItem[];
@@ -18,39 +19,51 @@ export const useCartStore = create<CartState>()(
       items: [],
 
       addItem: (bookId, quantity = 1, maxStock = 999) => {
+        const cleanId = sanitizeId(bookId);
+        if (!cleanId) return;
+
+        const cleanMaxStock = sanitizeStock(maxStock, 999);
+        const cleanQty = sanitizeQuantity(quantity, cleanMaxStock);
         const { items } = get();
-        const existing = items.find((i) => i.bookId === bookId);
+        const existing = items.find((i) => i.bookId === cleanId);
 
         if (existing) {
-          const newQty = Math.min(existing.quantity + quantity, maxStock);
+          const newQty = Math.min(existing.quantity + cleanQty, cleanMaxStock);
           set({
             items: items.map((i) =>
-              i.bookId === bookId ? { ...i, quantity: newQty } : i
+              i.bookId === cleanId ? { ...i, quantity: newQty } : i
             ),
           });
         } else {
           set({
-            items: [...items, { bookId, quantity: Math.min(quantity, maxStock) }],
+            items: [...items, { bookId: cleanId, quantity: Math.min(cleanQty, cleanMaxStock) }],
           });
         }
       },
 
       removeItem: (bookId) => {
+        const cleanId = sanitizeId(bookId);
         set({
-          items: get().items.filter((i) => i.bookId !== bookId),
+          items: get().items.filter((i) => i.bookId !== cleanId),
         });
       },
 
       updateQuantity: (bookId, quantity, maxStock = 999) => {
+        const cleanId = sanitizeId(bookId);
+        if (!cleanId) return;
+
         if (quantity <= 0) {
-          get().removeItem(bookId);
+          get().removeItem(cleanId);
           return;
         }
 
+        const cleanMaxStock = sanitizeStock(maxStock, 999);
+        const cleanQty = sanitizeQuantity(quantity, cleanMaxStock);
+
         set({
           items: get().items.map((i) =>
-            i.bookId === bookId
-              ? { ...i, quantity: Math.min(quantity, maxStock) }
+            i.bookId === cleanId
+              ? { ...i, quantity: cleanQty }
               : i
           ),
         });

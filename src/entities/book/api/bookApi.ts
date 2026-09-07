@@ -1,6 +1,7 @@
 import type { Book, CreateBookDto, UpdateBookDto, BookFilterParams } from '../model/types';
 import { storageService } from '../../../shared/api/storage';
 import { mockNetworkDelay } from '../../../shared/api/baseApi';
+import { sanitizeInput, sanitizePrice, sanitizeStock, sanitizeUrl, sanitizeId } from '../../../shared/lib/security';
 
 const STORAGE_KEY = 'kitap_all_books_v2';
 
@@ -279,8 +280,22 @@ export const bookApi = {
     await mockNetworkDelay();
     const books = storageService.get<Book[]>(STORAGE_KEY, INITIAL_BOOKS_SEED);
     const newBook: Book = {
-      ...dto,
       id: `book-${Date.now()}`,
+      title: sanitizeInput(dto.title),
+      author: sanitizeInput(dto.author),
+      price: sanitizePrice(dto.price),
+      oldPrice: dto.oldPrice !== undefined ? sanitizePrice(dto.oldPrice) : undefined,
+      coverImage: sanitizeUrl(dto.coverImage),
+      description: sanitizeInput(dto.description),
+      genre: sanitizeInput(dto.genre),
+      language: dto.language === 'ru' ? 'ru' : 'kz',
+      stock: sanitizeStock(dto.stock),
+      rating: Math.max(0, Math.min(5, Number(dto.rating) || 5.0)),
+      reviewsCount: sanitizeStock(dto.reviewsCount, 0),
+      isFeatured: Boolean(dto.isFeatured),
+      publicationYear: sanitizeStock(dto.publicationYear, 2024, 2100),
+      pages: sanitizeStock(dto.pages, 1),
+      isbn: sanitizeInput(dto.isbn),
     };
     const updated = [newBook, ...books];
     storageService.set(STORAGE_KEY, updated);
@@ -289,11 +304,30 @@ export const bookApi = {
 
   async update(id: string, dto: UpdateBookDto): Promise<Book> {
     await mockNetworkDelay();
+    const cleanId = sanitizeId(id);
     const books = storageService.get<Book[]>(STORAGE_KEY, INITIAL_BOOKS_SEED);
-    const index = books.findIndex((b) => b.id === id);
-    if (index === -1) throw new Error(`Book ${id} not found`);
+    const index = books.findIndex((b) => b.id === cleanId);
+    if (index === -1) throw new Error(`Book ${cleanId} not found`);
 
-    const updatedBook = { ...books[index], ...dto };
+    const current = books[index];
+    const updatedBook: Book = {
+      ...current,
+      ...(dto.title !== undefined && { title: sanitizeInput(dto.title) }),
+      ...(dto.author !== undefined && { author: sanitizeInput(dto.author) }),
+      ...(dto.price !== undefined && { price: sanitizePrice(dto.price) }),
+      ...(dto.oldPrice !== undefined && { oldPrice: sanitizePrice(dto.oldPrice) }),
+      ...(dto.coverImage !== undefined && { coverImage: sanitizeUrl(dto.coverImage) }),
+      ...(dto.description !== undefined && { description: sanitizeInput(dto.description) }),
+      ...(dto.genre !== undefined && { genre: sanitizeInput(dto.genre) }),
+      ...(dto.language !== undefined && { language: dto.language === 'ru' ? 'ru' : 'kz' }),
+      ...(dto.stock !== undefined && { stock: sanitizeStock(dto.stock) }),
+      ...(dto.rating !== undefined && { rating: Math.max(0, Math.min(5, Number(dto.rating) || 5.0)) }),
+      ...(dto.reviewsCount !== undefined && { reviewsCount: sanitizeStock(dto.reviewsCount, 0) }),
+      ...(dto.isFeatured !== undefined && { isFeatured: Boolean(dto.isFeatured) }),
+      ...(dto.publicationYear !== undefined && { publicationYear: sanitizeStock(dto.publicationYear, 2024, 2100) }),
+      ...(dto.pages !== undefined && { pages: sanitizeStock(dto.pages, 1) }),
+      ...(dto.isbn !== undefined && { isbn: sanitizeInput(dto.isbn) }),
+    };
     books[index] = updatedBook;
     storageService.set(STORAGE_KEY, books);
     return updatedBook;
@@ -301,25 +335,30 @@ export const bookApi = {
 
   async delete(id: string): Promise<void> {
     await mockNetworkDelay();
+    const cleanId = sanitizeId(id);
     const books = storageService.get<Book[]>(STORAGE_KEY, INITIAL_BOOKS_SEED);
-    const updated = books.filter((b) => b.id !== id);
+    const updated = books.filter((b) => b.id !== cleanId);
     storageService.set(STORAGE_KEY, updated);
   },
 
   async updateStock(id: string, newStock: number): Promise<void> {
     await mockNetworkDelay();
+    const cleanId = sanitizeId(id);
+    const cleanStock = sanitizeStock(newStock);
     const books = storageService.get<Book[]>(STORAGE_KEY, INITIAL_BOOKS_SEED);
     const updated = books.map((b) =>
-      b.id === id ? { ...b, stock: Math.max(0, newStock) } : b
+      b.id === cleanId ? { ...b, stock: cleanStock } : b
     );
     storageService.set(STORAGE_KEY, updated);
   },
 
   async decreaseStock(id: string, count: number): Promise<void> {
     await mockNetworkDelay();
+    const cleanId = sanitizeId(id);
+    const cleanCount = sanitizeStock(count, 1);
     const books = storageService.get<Book[]>(STORAGE_KEY, INITIAL_BOOKS_SEED);
     const updated = books.map((b) =>
-      b.id === id ? { ...b, stock: Math.max(0, b.stock - count) } : b
+      b.id === cleanId ? { ...b, stock: Math.max(0, b.stock - cleanCount) } : b
     );
     storageService.set(STORAGE_KEY, updated);
   },

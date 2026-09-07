@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Басты бет",
+    "catalog": "Каталог",
+    "profile": "Профиль",
+    "dashboard": "Жеке кабинет",
+    "admin": "Әкімшілік панель",
+    "login": "Кіру",
+    "register": "Тіркелу",
+    "logout": "Шығу",
+    "cart": "Себет"
+  },
+  "auth": {
+    "titleLogin": "Жүйеге кіру",
+    "titleRegister": "Тіркелу",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "name": "Аты-жөніңіз",
+    "confirmPassword": "Құпия сөзді растау",
+    "submitLogin": "Кіру",
+    "submitRegister": "Тіркелу",
+    "noAccount": "Әлі тіркелмедіңіз бе?",
+    "hasAccount": "Тіркелгенсіз бе?",
+    "role": "Қолжетімділік рөлі",
+    "loginSuccess": "Жүйеге сәтті кірдіңіз",
+    "registerSuccess": "Тіркелу сәтті аяқталды",
+    "logoutSuccess": "Жүйеден шықтыңыз",
+    "invalidCredentials": "Қате логин немесе құпия сөз"
+  },
+  "catalog": {
+    "title": "Тауарлар каталогы",
+    "subtitle": "Қазақстанның бай әдебиеті мен заманауи кітаптары",
+    "search": "Атауы, авторы немесе ISBN бойынша іздеу...",
+    "filter": "Сүзгілер",
+    "sort": "Сұрыптау",
+    "noResults": "Сұранысыңыз бойынша ештеңе табылмады",
+    "allCategories": "Барлық санаттар",
+    "inStockOnly": "Тек қолжетімділер",
+    "popular": "Танымалдығы бойынша",
+    "priceAsc": "Алдымен арзанырақ",
+    "priceDesc": "Алдымен қымбатырақ",
+    "rating": "Рейтингі бойынша",
+    "newest": "Жаңалары"
+  },
+  "product": {
+    "addToCart": "Себетке қосу",
+    "addedToCart": "Себетке қосылды",
+    "inStock": "Қолжетімді",
+    "outOfStock": "Қолжетімсіз",
+    "price": "Бағасы",
+    "description": "Сипаттама",
+    "characteristics": "Сипаттамалары",
+    "author": "Авторы",
+    "genre": "Жанры",
+    "publicationYear": "Шыққан жылы",
+    "pages": "Беттер саны",
+    "isbn": "ISBN",
+    "reviews": "пікір",
+    "backToCatalog": "Каталогқа қайту"
+  },
+  "dashboard": {
+    "client": {
+      "title": "Тұтынушы кабинеті",
+      "orders": "Менің тапсырыстарым",
+      "favorites": "Таңдаулылар",
+      "settings": "Баптаулар",
+      "profile": "Жеке мәліметтер",
+      "recentOrders": "Тапсырыстар тарихы",
+      "emptyOrders": "Әзірге ешқандай тапсырыс жасалмаған"
+    },
+    "admin": {
+      "title": "Әкімші панелі",
+      "overview": "Шолу",
+      "products": "Тауарлар",
+      "users": "Пайдаланушылар",
+      "orders": "Тапсырыстар",
+      "stats": "Талдау",
+      "addProduct": "Тауар қосу",
+      "editProduct": "Өңдеу",
+      "deleteProduct": "Жою",
+      "totalRevenue": "Жалпы түсім",
+      "totalOrders": "Барлық тапсырыстар",
+      "activeUsers": "Пайдаланушылар"
+    }
+  },
+  "common": {
+    "loading": "Жүктелуде...",
+    "error": "Қате орын алды",
+    "save": "Сақтау",
+    "cancel": "Болдырмау",
+    "delete": "Жою",
+    "confirm": "Растау",
+    "close": "Жабу",
+    "kzt": "₸",
+    "actions": "Әрекеттер",
+    "status": "Күйі",
+    "date": "Күні",
+    "qty": "Саны",
+    "total": "Барлығы"
+  }
+}
