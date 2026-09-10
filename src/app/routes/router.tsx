@@ -13,95 +13,100 @@ import { AdminCatalogPage } from '../../pages/admin-catalog';
 import { AdminWarehousePage } from '../../pages/admin-warehouse';
 import { AdminAnalyticsPage } from '../../pages/admin-analytics';
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <LandingPage />,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
+        },
+        // Client Routes
+        {
+          path: 'client',
+          children: [
+            {
+              path: 'catalog',
+              element: <CatalogPage />,
+            },
+            {
+              path: 'cart',
+              element: <CartPage />,
+            },
+            {
+              path: 'dashboard',
+              element: (
+                <ProtectedRoute allowedRoles={['client']}>
+                  <ClientDashboardPage />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: 'orders',
+              element: (
+                <ProtectedRoute allowedRoles={['client']}>
+                  <OrdersPage />
+                </ProtectedRoute>
+              ),
+            },
+          ],
+        },
+        // Admin Routes
+        {
+          path: 'admin',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'admin/dashboard',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'admin/catalog',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminCatalogPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'admin/warehouse',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminWarehousePage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'admin/analytics',
+          element: (
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminAnalyticsPage />
+            </ProtectedRoute>
+          ),
+        },
+        // Fallback
+        {
+          path: '*',
+          element: <Navigate to="/" replace />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <AppLayout />,
-    children: [
-      {
-        index: true,
-        element: <LandingPage />,
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      // Client Routes
-      {
-        path: 'client',
-        children: [
-          {
-            path: 'catalog',
-            element: <CatalogPage />,
-          },
-          {
-            path: 'cart',
-            element: <CartPage />,
-          },
-          {
-            path: 'dashboard',
-            element: (
-              <ProtectedRoute allowedRoles={['client']}>
-                <ClientDashboardPage />
-              </ProtectedRoute>
-            ),
-          },
-          {
-            path: 'orders',
-            element: (
-              <ProtectedRoute allowedRoles={['client']}>
-                <OrdersPage />
-              </ProtectedRoute>
-            ),
-          },
-        ],
-      },
-      // Admin Routes
-      {
-        path: 'admin',
-        element: (
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'admin/dashboard',
-        element: (
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'admin/catalog',
-        element: (
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminCatalogPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'admin/warehouse',
-        element: (
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminWarehousePage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'admin/analytics',
-        element: (
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminAnalyticsPage />
-          </ProtectedRoute>
-        ),
-      },
-      // Fallback
-      {
-        path: '*',
-        element: <Navigate to="/" replace />,
-      },
-    ],
-  },
-]);
+    basename: import.meta.env.BASE_URL,
+  }
+);
