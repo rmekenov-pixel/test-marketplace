@@ -8,7 +8,7 @@ import { useCartStore } from '../../entities/cart/model/cartStore';
 import { useWishlistStore } from '../../entities/wishlist/model/wishlistStore';
 import { useUiStore } from '../../shared/lib/ui/useUiStore';
 import { useTheme } from '../../shared/lib/theme/useTheme';
-import { useLang, type Language } from '../../shared/lib/i18n/useLang';
+import { useLang } from '../../shared/lib/i18n/useLang';
 
 export const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -70,19 +70,19 @@ export const Header: React.FC = () => {
         <div className="flex items-center space-x-2 sm:space-x-3">
           {/* Language Switcher */}
           <div className="flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded p-0.5">
-            {(['kk', 'ru', 'en'] as Language[]).map((l) => (
+            {(['kk', 'ru'] as const).map((l) => (
               <button
                 key={l}
                 type="button"
                 onClick={() => setLang(l)}
-                className={`px-1.5 sm:px-2 py-1 text-[10px] font-bold uppercase rounded transition-colors ${
+                className={`px-2 py-1 text-[11px] font-bold uppercase rounded transition-colors ${
                   lang === l || (l === 'kk' && lang === 'kz')
                     ? 'bg-white text-zinc-950 dark:bg-zinc-800 dark:text-white shadow-xs'
                     : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-200'
                 }`}
                 aria-label={`Switch language to ${l}`}
               >
-                {l === 'kk' ? 'KZ' : l.toUpperCase()}
+                {l === 'kk' ? 'KZ' : 'RU'}
               </button>
             ))}
           </div>

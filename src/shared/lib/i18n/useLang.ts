@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import i18n from './i18n';
 
-export type Language = 'ru' | 'en' | 'kk' | 'kz';
+export type Language = 'kk' | 'ru' | 'kz';
 
 interface LangState {
   lang: Language;
@@ -12,7 +12,7 @@ interface LangState {
 const STORAGE_KEY = 'qazaq_market_lang';
 
 export const useLang = create<LangState>((set) => ({
-  lang: ((i18n.language === 'kz' ? 'kk' : i18n.language) as Language) || 'ru',
+  lang: ((i18n.language === 'kz' ? 'kk' : i18n.language) as Language) || 'kk',
 
   setLang: (lang: Language) => {
     const target = lang === 'kz' ? 'kk' : lang;
@@ -24,4 +24,5 @@ export const useLang = create<LangState>((set) => ({
     set({ lang: target });
   },
 }));
+
 

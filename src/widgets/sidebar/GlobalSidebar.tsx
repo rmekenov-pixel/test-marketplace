@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -22,7 +22,7 @@ import { useAuthStore } from '../../entities/user/model/authStore';
 import { useCartStore } from '../../entities/cart/model/cartStore';
 import { useWishlistStore } from '../../entities/wishlist/model/wishlistStore';
 import { useTheme } from '../../shared/lib/theme/useTheme';
-import { useLang, type Language } from '../../shared/lib/i18n/useLang';
+import { useLang } from '../../shared/lib/i18n/useLang';
 
 interface CategoryItem {
   id: string;
@@ -320,7 +320,7 @@ export const GlobalSidebar: React.FC = () => {
           <div className="grid grid-cols-2 gap-2 p-2 bg-zinc-100 dark:bg-zinc-900/60 rounded border border-zinc-200 dark:border-zinc-800">
             {/* Language Switcher */}
             <div className="flex items-center justify-center p-0.5 bg-white dark:bg-zinc-950 rounded border border-zinc-200 dark:border-zinc-800">
-              {(['kk', 'ru', 'en'] as Language[]).map((l) => (
+              {(['kk', 'ru'] as const).map((l) => (
                 <button
                   key={l}
                   type="button"
@@ -331,7 +331,7 @@ export const GlobalSidebar: React.FC = () => {
                       : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-200'
                   }`}
                 >
-                  {l === 'kk' ? 'KZ' : l.toUpperCase()}
+                  {l === 'kk' ? 'KZ' : 'RU'}
                 </button>
               ))}
             </div>

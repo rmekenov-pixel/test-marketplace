@@ -25,14 +25,10 @@ describe('Theme and Language Switching Logic', () => {
     expect(useTheme.getState().theme).toBe('dark');
   });
 
-  it('switches language between RU, KK, EN, and supports KZ alias', () => {
+  it('switches language between RU and KK (with KZ alias)', () => {
     useLang.getState().setLang('kk');
     expect(useLang.getState().lang).toBe('kk');
     expect(i18n.language).toBe('kk');
-
-    useLang.getState().setLang('en');
-    expect(useLang.getState().lang).toBe('en');
-    expect(i18n.language).toBe('en');
 
     // Test KZ alias
     useLang.getState().setLang('kz');
