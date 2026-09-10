@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    @apply bg-[#0a0a0c] text-zinc-100 antialiased font-sans;
+    @apply bg-zinc-50 text-zinc-900 dark:bg-[#0a0a0c] dark:text-zinc-100 antialiased font-sans;
     font-size: 14px;
     line-height: 1.6;
     min-height: 100vh;

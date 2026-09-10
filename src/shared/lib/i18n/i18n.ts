@@ -16,8 +16,9 @@ i18n
       ru: { translation: ruLocale },
       en: { translation: enLocale },
       kk: { translation: kkLocale },
+      kz: { translation: kkLocale },
     },
-    lng: initialLanguage,
+    lng: initialLanguage === 'kz' ? 'kk' : initialLanguage,
     fallbackLng: 'ru',
     interpolation: {
       escapeValue: false,

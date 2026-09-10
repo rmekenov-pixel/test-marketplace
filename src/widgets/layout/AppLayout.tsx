@@ -17,7 +17,7 @@ export const AppLayout: React.FC = () => {
     location.pathname.startsWith('/profile');
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0c] text-zinc-100 transition-colors pb-16 md:pb-0 selection:bg-white/20 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-zinc-50 text-zinc-900 dark:bg-[#0a0a0c] dark:text-zinc-100 transition-colors pb-16 md:pb-0 selection:bg-zinc-900 selection:text-white dark:selection:bg-white/20 dark:selection:text-white">
       <Header />
       <GlobalSidebar />
 
