@@ -34,12 +34,12 @@ export const SafeImage: React.FC<SafeImageProps> = ({
   const imageSrc = error ? fallbackSrc : (src || fallbackSrc);
 
   return (
-    <div className={`relative overflow-hidden bg-slate-100 dark:bg-slate-800 ${containerClassName}`}>
+    <div className={`relative overflow-hidden bg-zinc-100 dark:bg-zinc-900 ${containerClassName}`}>
       {loading && (
-        <div className="absolute inset-0 animate-pulse bg-slate-200 dark:bg-slate-700" />
+        <div className="absolute inset-0 animate-pulse bg-zinc-200 dark:bg-zinc-800" />
       )}
       {error && !fallbackSrc ? (
-        <div className="flex flex-col items-center justify-center w-full h-full p-4 text-slate-400">
+        <div className="flex flex-col items-center justify-center w-full h-full p-4 text-zinc-500">
           <ImageOff className="w-8 h-8 stroke-1" />
         </div>
       ) : (

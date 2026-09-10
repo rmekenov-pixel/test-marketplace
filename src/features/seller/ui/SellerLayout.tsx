@@ -23,19 +23,19 @@ export const SellerLayout: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Seller Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded">
+          <div className="p-2 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded">
             <Store className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <h1 className="text-xl font-semibold text-zinc-100 flex items-center gap-2">
               <span>Кабинет продавца</span>
-              <span className="text-[11px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
+              <span className="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-zinc-700">
                 B2B Portal
               </span>
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-zinc-500 font-mono">
               Вендор: {user?.name || 'Qazaq Books Vendor'}
             </p>
           </div>
@@ -43,7 +43,7 @@ export const SellerLayout: React.FC = () => {
 
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-zinc-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Вернуться на витрину</span>
@@ -51,7 +51,7 @@ export const SellerLayout: React.FC = () => {
       </div>
 
       {/* Tabs / Subnavigation */}
-      <nav className="flex space-x-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+      <nav className="flex space-x-2 border-b border-zinc-800 pb-2">
         {links.map((link) => {
           const Icon = link.icon;
           return (
@@ -60,10 +60,10 @@ export const SellerLayout: React.FC = () => {
               to={link.to}
               end={link.end}
               className={({ isActive }) =>
-                `inline-flex items-center gap-2 px-3.5 py-2 rounded text-xs font-medium transition-colors ${
+                `inline-flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-medium transition-colors ${
                   isActive
-                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
+                    ? 'bg-zinc-100 text-zinc-950 font-semibold'
+                    : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100'
                 }`
               }
             >

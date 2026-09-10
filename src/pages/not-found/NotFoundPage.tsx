@@ -8,23 +8,23 @@ export const NotFoundPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="py-24 flex flex-col items-center justify-center text-center space-y-4">
-      <div className="p-4 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-full text-slate-500">
-        <FileQuestion className="w-12 h-12 stroke-1" />
+    <div className="py-24 flex flex-col items-start justify-start text-left space-y-4">
+      <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-full text-zinc-300">
+        <FileQuestion className="w-8 h-8 stroke-1" />
       </div>
 
-      <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+      <h1 className="text-2xl font-bold text-zinc-100">
         404 — Страница не найдена
       </h1>
 
-      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 max-w-md">
+      <p className="text-xs md:text-sm text-zinc-500 max-w-md">
         Запрошенная страница не существует или была перемещена по другому адресу.
       </p>
 
       <div className="pt-4">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold rounded transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-semibold rounded transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{t('nav.home')}</span>

@@ -17,14 +17,14 @@ export const AppLayout: React.FC = () => {
     location.pathname.startsWith('/profile');
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#0a0a0c] text-zinc-100 transition-colors pb-16 md:pb-0 selection:bg-white/20 selection:text-white">
       <Header />
       <GlobalSidebar />
 
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         {showSidebar && <Sidebar />}
 
-        <main className="flex-1 min-w-0 px-6 md:px-10 lg:px-16 py-8">
+        <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 py-8">
           <Outlet />
         </main>
       </div>

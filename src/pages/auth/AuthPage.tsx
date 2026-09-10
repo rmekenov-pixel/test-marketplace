@@ -20,12 +20,12 @@ export const AuthPage: React.FC = () => {
 
   return (
     <div className="py-12 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded p-8 shadow-sm">
+      <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 rounded p-8 shadow-sm">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="text-xl font-bold tracking-tight text-zinc-100">
             {isLoginMode ? t('auth.titleLogin') : t('auth.titleRegister')}
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-zinc-500 mt-1">
             QazaqMarket — Книжный маркетплейс
           </p>
         </div>

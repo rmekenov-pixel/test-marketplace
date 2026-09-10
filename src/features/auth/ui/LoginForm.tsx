@@ -104,40 +104,40 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 text-xs text-rose-600 bg-rose-50 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200 dark:border-rose-900 rounded">
+          <div className="p-3 text-xs text-rose-400 bg-rose-950/40 border border-rose-900/60 rounded">
             {error}
           </div>
         )}
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-mono tracking-wider text-zinc-400 uppercase mb-1.5">
             {t('auth.email') || 'Email'}
           </label>
           <div className="relative">
-            <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Mail className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-slate-900 dark:text-slate-100 focus:outline-none focus:border-sky-500 transition-colors"
+              className="w-full pl-9 pr-3 py-2 text-xs bg-zinc-900 border border-zinc-800 rounded text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
               placeholder="admin@qazaqmarket.kz или ваш email"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-mono tracking-wider text-zinc-400 uppercase mb-1.5">
             {t('auth.password') || 'Пароль'}
           </label>
           <div className="relative">
-            <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-slate-900 dark:text-slate-100 focus:outline-none focus:border-sky-500 transition-colors"
+              className="w-full pl-9 pr-3 py-2 text-xs bg-zinc-900 border border-zinc-800 rounded text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -146,7 +146,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white font-medium text-sm rounded transition-colors shadow-xs"
+          className="w-full py-2.5 px-4 bg-white hover:bg-zinc-200 disabled:opacity-50 text-zinc-950 font-medium text-xs rounded transition-colors"
         >
           {isLoading ? (t('common.loading') || 'Загрузка...') : (t('auth.submitLogin') || 'Войти')}
         </button>
@@ -155,7 +155,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           <button
             type="button"
             onClick={onSwitchToRegister}
-            className="text-xs text-sky-600 dark:text-sky-400 hover:underline"
+            className="text-xs text-zinc-400 hover:text-zinc-100 hover:underline"
           >
             {t('auth.noAccount') || 'Еще нет аккаунта?'} {t('auth.submitRegister') || 'Зарегистрироваться'}
           </button>
@@ -163,39 +163,39 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
       </form>
 
       {/* Automated Quick Login Presets */}
-      <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
-        <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center mb-2.5">
+      <div className="pt-4 border-t border-zinc-800">
+        <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 text-center mb-2.5">
           Быстрый вход для тестирования
         </div>
         <div className="grid grid-cols-3 gap-2">
           <button
             type="button"
             onClick={() => handleQuickLogin('admin')}
-            className="flex flex-col items-center justify-center p-2 rounded border border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 bg-slate-50 dark:bg-slate-800/50 hover:bg-sky-50 dark:hover:bg-sky-950/30 transition-all text-center group"
+            className="flex flex-col items-center justify-center p-2 rounded border border-zinc-800 hover:border-zinc-600 bg-zinc-900/60 hover:bg-zinc-800/60 transition-all text-center group"
           >
-            <Shield className="w-4 h-4 text-sky-600 dark:text-sky-400 mb-1" />
-            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Админ</span>
-            <span className="text-[10px] text-slate-400 font-mono">admin123</span>
+            <Shield className="w-4 h-4 text-zinc-300 mb-1" />
+            <span className="text-xs font-medium text-zinc-200">Админ</span>
+            <span className="text-[10px] text-zinc-500 font-mono">admin123</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleQuickLogin('seller')}
-            className="flex flex-col items-center justify-center p-2 rounded border border-slate-200 dark:border-slate-800 hover:border-emerald-500 dark:hover:border-emerald-500 bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all text-center group"
+            className="flex flex-col items-center justify-center p-2 rounded border border-zinc-800 hover:border-zinc-600 bg-zinc-900/60 hover:bg-zinc-800/60 transition-all text-center group"
           >
-            <Store className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mb-1" />
-            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Продавец</span>
-            <span className="text-[10px] text-slate-400 font-mono">seller123</span>
+            <Store className="w-4 h-4 text-zinc-300 mb-1" />
+            <span className="text-xs font-medium text-zinc-200">Продавец</span>
+            <span className="text-[10px] text-zinc-500 font-mono">seller123</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleQuickLogin('client')}
-            className="flex flex-col items-center justify-center p-2 rounded border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 bg-slate-50 dark:bg-slate-800/50 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-all text-center group"
+            className="flex flex-col items-center justify-center p-2 rounded border border-zinc-800 hover:border-zinc-600 bg-zinc-900/60 hover:bg-zinc-800/60 transition-all text-center group"
           >
-            <UserIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400 mb-1" />
-            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Покупатель</span>
-            <span className="text-[10px] text-slate-400 font-mono">user123</span>
+            <UserIcon className="w-4 h-4 text-zinc-300 mb-1" />
+            <span className="text-xs font-medium text-zinc-200">Покупатель</span>
+            <span className="text-[10px] text-zinc-500 font-mono">user123</span>
           </button>
         </div>
       </div>

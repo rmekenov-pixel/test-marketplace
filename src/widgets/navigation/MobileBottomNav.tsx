@@ -17,15 +17,15 @@ export const MobileBottomNav: React.FC = () => {
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center justify-around"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0a0a0c]/95 backdrop-blur-md border-t border-zinc-800 px-4 py-2.5 flex items-center justify-around"
     >
       <NavLink
         to="/"
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
             isActive
-              ? 'text-sky-600 dark:text-sky-400'
-              : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+              ? 'text-white'
+              : 'text-zinc-500 hover:text-zinc-300'
           }`
         }
       >
@@ -38,8 +38,8 @@ export const MobileBottomNav: React.FC = () => {
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
             isActive
-              ? 'text-sky-600 dark:text-sky-400'
-              : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+              ? 'text-white'
+              : 'text-zinc-500 hover:text-zinc-300'
           }`
         }
       >
@@ -52,14 +52,14 @@ export const MobileBottomNav: React.FC = () => {
         className={({ isActive }) =>
           `relative flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
             isActive
-              ? 'text-sky-600 dark:text-sky-400'
-              : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+              ? 'text-white'
+              : 'text-zinc-500 hover:text-zinc-300'
           }`
         }
       >
         <Heart className="w-4 h-4" />
         {wishlistCount > 0 && (
-          <span className="absolute -top-1 right-1 min-w-[14px] h-[14px] px-0.5 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 right-1 min-w-[14px] h-[14px] px-0.5 bg-zinc-100 text-zinc-950 text-[9px] font-bold rounded-full flex items-center justify-center">
             {wishlistCount}
           </span>
         )}
@@ -71,14 +71,14 @@ export const MobileBottomNav: React.FC = () => {
         className={({ isActive }) =>
           `relative flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
             isActive
-              ? 'text-sky-600 dark:text-sky-400'
-              : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+              ? 'text-white'
+              : 'text-zinc-500 hover:text-zinc-300'
           }`
         }
       >
         <ShoppingBag className="w-4 h-4" />
         {cartCount > 0 && (
-          <span className="absolute -top-1 right-0 min-w-[14px] h-[14px] px-0.5 bg-sky-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 right-0 min-w-[14px] h-[14px] px-0.5 bg-white text-zinc-950 text-[9px] font-bold rounded-full flex items-center justify-center">
             {cartCount}
           </span>
         )}
@@ -90,8 +90,8 @@ export const MobileBottomNav: React.FC = () => {
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 text-[10px] font-medium transition-colors ${
             isActive
-              ? 'text-sky-600 dark:text-sky-400'
-              : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+              ? 'text-white'
+              : 'text-zinc-500 hover:text-zinc-300'
           }`
         }
       >

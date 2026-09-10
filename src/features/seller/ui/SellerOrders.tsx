@@ -6,11 +6,11 @@ import { useToastStore } from '../../../shared/lib/toast/useToastStore';
 import type { SellerOrderStatus } from '../../../entities/seller/model/types';
 
 const STATUS_LABELS: Record<SellerOrderStatus, { label: string; color: string }> = {
-  new: { label: 'Новый заказ', color: 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300 border-sky-500/20' },
-  packing: { label: 'Комплектация', color: 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 border-amber-500/20' },
-  shipped: { label: 'В доставке', color: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-500/20' },
-  delivered: { label: 'Доставлен', color: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-500/20' },
-  cancelled: { label: 'Отменен', color: 'bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300 border-rose-500/20' },
+  new: { label: 'Новый заказ', color: 'bg-zinc-900 text-zinc-300 border-zinc-700' },
+  packing: { label: 'Комплектация', color: 'bg-zinc-900 text-zinc-300 border-zinc-700' },
+  shipped: { label: 'В доставке', color: 'bg-zinc-900 text-zinc-300 border-zinc-700' },
+  delivered: { label: 'Доставлен', color: 'bg-zinc-900 text-zinc-100 border-zinc-600' },
+  cancelled: { label: 'Отменен', color: 'bg-zinc-900 text-rose-400 border-rose-900/60' },
 };
 
 export const SellerOrders: React.FC = () => {
@@ -38,8 +38,8 @@ export const SellerOrders: React.FC = () => {
             onClick={() => setFilter(st)}
             className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
               filter === st
-                ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900'
-                : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? 'bg-white text-zinc-950 font-semibold'
+                : 'bg-zinc-950 border border-zinc-800 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
             }`}
           >
             {st === 'all' ? 'Все заказы' : STATUS_LABELS[st as SellerOrderStatus]?.label || st}
@@ -55,19 +55,19 @@ export const SellerOrders: React.FC = () => {
           return (
             <div
               key={order.id}
-              className="p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded space-y-4"
+              className="p-5 bg-zinc-950 border border-zinc-800 rounded space-y-4"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
                 <div>
-                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100 mr-2">
+                  <span className="text-sm font-bold font-mono text-zinc-100 mr-2">
                     {order.orderNumber}
                   </span>
-                  <span className="text-xs text-slate-400">{formatDate(order.createdAt)}</span>
+                  <span className="text-xs text-zinc-500 font-mono">{formatDate(order.createdAt)}</span>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <span
-                    className={`px-2.5 py-1 rounded text-[11px] font-semibold uppercase tracking-wider border ${statusInfo.color}`}
+                    className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider border ${statusInfo.color}`}
                   >
                     {statusInfo.label}
                   </span>
@@ -75,7 +75,7 @@ export const SellerOrders: React.FC = () => {
                   <select
                     value={order.status}
                     onChange={(e) => handleStatusChange(order.id, e.target.value as SellerOrderStatus)}
-                    className="px-2 py-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-xs font-medium cursor-pointer"
+                    className="px-2 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs font-medium text-zinc-300 cursor-pointer"
                   >
                     <option value="new">Новый</option>
                     <option value="packing">Комплектация</option>
@@ -88,21 +88,21 @@ export const SellerOrders: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 <div>
-                  <span className="text-slate-400 block mb-0.5">Получатель:</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-100 block">
+                  <span className="text-zinc-500 block mb-0.5">Получатель:</span>
+                  <span className="font-semibold text-zinc-200 block">
                     {order.customerName}
                   </span>
-                  <span className="text-slate-500">{order.customerPhone}</span>
+                  <span className="text-zinc-500 font-mono">{order.customerPhone}</span>
                 </div>
 
                 <div>
-                  <span className="text-slate-400 block mb-0.5">Адрес доставки:</span>
-                  <span className="text-slate-700 dark:text-slate-300">{order.deliveryAddress}</span>
+                  <span className="text-zinc-500 block mb-0.5">Адрес доставки:</span>
+                  <span className="text-zinc-300">{order.deliveryAddress}</span>
                 </div>
 
                 <div className="sm:text-right">
-                  <span className="text-slate-400 block mb-0.5">Сумма заказа ({order.itemsCount} поз.):</span>
-                  <span className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  <span className="text-zinc-500 block mb-0.5">Сумма заказа ({order.itemsCount} поз.):</span>
+                  <span className="text-base font-bold font-mono text-zinc-100">
                     {formatKZT(order.total)}
                   </span>
                 </div>
