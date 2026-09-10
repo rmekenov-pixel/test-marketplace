@@ -23,100 +23,105 @@ import { SellerProducts } from '../../features/seller/ui/SellerProducts';
 import { SellerOrders } from '../../features/seller/ui/SellerOrders';
 import { SellerAnalytics } from '../../features/seller/ui/SellerAnalytics';
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: 'auth',
+          element: <AuthPage />,
+        },
+        {
+          path: 'catalog',
+          element: <CatalogPage />,
+        },
+        {
+          path: 'catalog/:id',
+          element: <ProductPage />,
+        },
+        {
+          path: 'wishlist',
+          element: <WishlistPage />,
+        },
+        {
+          path: 'cart',
+          element: <CartPage />,
+        },
+        {
+          path: 'checkout/success',
+          element: <OrderSuccessPage />,
+        },
+        {
+          path: 'dashboard',
+          element: (
+            <ProtectedRoute allowedRoles={['CLIENT', 'ADMIN', 'SELLER', 'client', 'admin', 'seller']}>
+              <ClientDashboardPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'seller',
+          element: (
+            <ProtectedRoute allowedRoles={['SELLER', 'seller', 'ADMIN', 'admin']}>
+              <SellerLayout />
+            </ProtectedRoute>
+          ),
+          children: [
+            {
+              index: true,
+              element: <SellerDashboard />,
+            },
+            {
+              path: 'products',
+              element: <SellerProducts />,
+            },
+            {
+              path: 'orders',
+              element: <SellerOrders />,
+            },
+            {
+              path: 'analytics',
+              element: <SellerAnalytics />,
+            },
+          ],
+        },
+        {
+          path: 'admin',
+          element: (
+            <ProtectedRoute allowedRoles={['ADMIN', 'admin']}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'profile',
+          element: (
+            <ProtectedRoute allowedRoles={['CLIENT', 'ADMIN', 'SELLER', 'client', 'admin', 'seller']}>
+              <ProfilePage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: '403',
+          element: <ForbiddenPage />,
+        },
+        {
+          path: '*',
+          element: <NotFoundPage />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <AppLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'auth',
-        element: <AuthPage />,
-      },
-      {
-        path: 'catalog',
-        element: <CatalogPage />,
-      },
-      {
-        path: 'catalog/:id',
-        element: <ProductPage />,
-      },
-      {
-        path: 'wishlist',
-        element: <WishlistPage />,
-      },
-      {
-        path: 'cart',
-        element: <CartPage />,
-      },
-      {
-        path: 'checkout/success',
-        element: <OrderSuccessPage />,
-      },
-      {
-        path: 'dashboard',
-        element: (
-          <ProtectedRoute allowedRoles={['CLIENT', 'ADMIN', 'SELLER', 'client', 'admin', 'seller']}>
-            <ClientDashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'seller',
-        element: (
-          <ProtectedRoute allowedRoles={['SELLER', 'seller', 'ADMIN', 'admin']}>
-            <SellerLayout />
-          </ProtectedRoute>
-        ),
-        children: [
-          {
-            index: true,
-            element: <SellerDashboard />,
-          },
-          {
-            path: 'products',
-            element: <SellerProducts />,
-          },
-          {
-            path: 'orders',
-            element: <SellerOrders />,
-          },
-          {
-            path: 'analytics',
-            element: <SellerAnalytics />,
-          },
-        ],
-      },
-      {
-        path: 'admin',
-        element: (
-          <ProtectedRoute allowedRoles={['ADMIN', 'admin']}>
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'profile',
-        element: (
-          <ProtectedRoute allowedRoles={['CLIENT', 'ADMIN', 'SELLER', 'client', 'admin', 'seller']}>
-            <ProfilePage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: '403',
-        element: <ForbiddenPage />,
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />,
-      },
-    ],
-  },
-]);
+    basename: import.meta.env.BASE_URL,
+  }
+);
 
 export const AppRouter: React.FC = () => {
   return <RouterProvider router={router} />;
