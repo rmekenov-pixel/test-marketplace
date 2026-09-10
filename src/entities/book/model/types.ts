@@ -1,4 +1,4 @@
-export type BookLanguage = 'kz' | 'ru';
+export type BookLanguage = 'kz' | 'ru' | 'en';
 
 export interface Book {
   id: string;
@@ -17,14 +17,24 @@ export interface Book {
   publicationYear: number;
   pages: number;
   isbn: string;
+  publisher?: string;
+  coverType?: 'hardcover' | 'paperback';
+  weight?: string;
+  dimensions?: string;
+  ageRestriction?: string;
+  translator?: string;
+  quote?: string;
 }
 
 export interface BookFilterParams {
   genre?: string;
   language?: BookLanguage | 'all';
+  publisher?: string;
+  coverType?: 'all' | 'hardcover' | 'paperback';
   searchQuery?: string;
   sortBy?: 'popular' | 'rating' | 'price_asc' | 'price_desc' | 'newest';
 }
 
 export type CreateBookDto = Omit<Book, 'id'>;
 export type UpdateBookDto = Partial<CreateBookDto>;
+
