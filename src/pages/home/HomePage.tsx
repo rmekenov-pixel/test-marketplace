@@ -1,4 +1,4 @@
-﻿// src/pages/home/HomePage.tsx
+// src/pages/home/HomePage.tsx
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -25,9 +25,6 @@ export const HomePage: React.FC = () => {
       {/* Hero Section */}
       <section className="border-b border-zinc-200 dark:border-zinc-800 pb-12">
         <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-900 dark:border-zinc-800 text-[11px] font-mono dark:text-zinc-400">
-            <span>{isKz ? 'Ұлттық және әлемдік әдебиеттер маркетплейсі' : 'Маркетплейс национальной и мировой литературы'}</span>
-          </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.08]">
             {isKz ? 'Қазақстанның кітап кеңістігі' : 'Книжное пространство Казахстана'}
