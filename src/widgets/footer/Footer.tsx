@@ -5,7 +5,7 @@ import { useLang } from '../../shared/lib/i18n/useLang';
 
 export const Footer: React.FC = () => {
   const { t } = useTranslation();
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
 
   return (
     <footer className="w-full bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-[#0a0a0c] dark:text-zinc-400 border-t dark:border-zinc-800 py-12 transition-colors mt-auto text-left">
@@ -97,22 +97,6 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="text-zinc-500 dark:text-zinc-400">
             © {new Date().getFullYear()} QazaqMarket. {lang === 'kk' || lang === 'kz' ? 'Барлық құқықтар қорғалған.' : 'Все права защищены.'}
-          </div>
-
-          <div className="flex items-center gap-1 border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/60 rounded p-0.5">
-            {(['kk', 'ru'] as const).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold transition-colors ${
-                  lang === l || (l === 'kk' && lang === 'kz')
-                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 shadow-xs'
-                    : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white'
-                }`}
-              >
-                {l === 'kk' ? 'KZ' : 'RU'}
-              </button>
-            ))}
           </div>
         </div>
       </div>
