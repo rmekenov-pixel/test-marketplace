@@ -10,20 +10,8 @@ export const Footer: React.FC = () => {
   return (
     <footer className="w-full bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-[#0a0a0c] dark:text-zinc-400 border-t dark:border-zinc-800 py-12 transition-colors mt-auto text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 pb-8 border-b border-zinc-200 dark:border-zinc-800/80">
-          {/* Col 1: About */}
-          <div className="space-y-3">
-            <div className="text-sm font-black tracking-tight text-zinc-950 dark:text-white uppercase">
-              QazaqMarket
-            </div>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
-              {lang === 'kk' || lang === 'kz'
-                ? 'Қазақстанның жетекші кітап маркетплейсі. Ұлттық классика, әлемдік бестселлерлер мен ресми баспалардан тікелей жеткізу.'
-                : 'Главный книжный маркетплейс Казахстана. Классическая и современная казахская, мировая и деловая литература с быстрой доставкой во все регионы страны.'}
-            </p>
-          </div>
-
-          {/* Col 2: Buyers */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-16 md:gap-y-10 mb-10 pb-8 border-b border-zinc-200 dark:border-zinc-800/80">
+          {/* Row 1, Col 1: Buyers */}
           <div className="space-y-2.5">
             <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
               {lang === 'kk' || lang === 'kz' ? 'Оқырмандарға' : 'Покупателям'}
@@ -52,7 +40,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Sellers & Partners */}
+          {/* Row 1, Col 2: Sellers & Partners */}
           <div className="space-y-2.5">
             <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
               {lang === 'kk' || lang === 'kz' ? 'Серіктестерге' : 'Партнерам'}
@@ -76,7 +64,19 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 4: Contacts & Support */}
+          {/* Row 2, Col 1: About */}
+          <div className="space-y-3">
+            <div className="text-sm font-black tracking-tight text-zinc-950 dark:text-white uppercase">
+              QazaqMarket
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              {lang === 'kk' || lang === 'kz'
+                ? 'Қазақстанның жетекші кітап маркетплейсі. Ұлттық классика, әлемдік бестселлерлер мен ресми баспалардан тікелей жеткізу.'
+                : 'Главный книжный маркетплейс Казахстана. Классическая и современная казахская, мировая и деловая литература с быстрой доставкой во все регионы страны.'}
+            </p>
+          </div>
+
+          {/* Row 2, Col 2: Contacts & Support */}
           <div className="space-y-2.5">
             <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
               {lang === 'kk' || lang === 'kz' ? 'Қолдау қызметі' : 'Поддержка'}
