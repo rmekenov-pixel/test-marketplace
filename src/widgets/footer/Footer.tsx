@@ -11,7 +11,19 @@ export const Footer: React.FC = () => {
     <footer className="w-full bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-[#0a0a0c] dark:text-zinc-400 border-t dark:border-zinc-800 py-12 transition-colors mt-auto text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-16 md:gap-y-10 mb-10 pb-8 border-b border-zinc-200 dark:border-zinc-800/80">
-          {/* Row 1, Col 1: Buyers */}
+          {/* Row 1, Col 1 (Top-Left): About / QazaqMarket */}
+          <div className="space-y-3">
+            <div className="text-sm font-black tracking-tight text-zinc-950 dark:text-white uppercase">
+              QazaqMarket
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+              {lang === 'kk' || lang === 'kz'
+                ? 'Қазақстанның жетекші кітап маркетплейсі. Ұлттық классика, әлемдік бестселлерлер мен ресми баспалардан тікелей жеткізу.'
+                : 'Главный книжный маркетплейс Казахстана. Классическая и современная казахская, мировая и деловая литература с быстрой доставкой во все регионы страны.'}
+            </p>
+          </div>
+
+          {/* Row 1, Col 2 (Top-Right): Buyers / Покупателям */}
           <div className="space-y-2.5">
             <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
               {lang === 'kk' || lang === 'kz' ? 'Оқырмандарға' : 'Покупателям'}
@@ -40,7 +52,23 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Row 1, Col 2: Sellers & Partners */}
+          {/* Row 2, Col 1 (Bottom-Left): Contacts & Support / Поддержка */}
+          <div className="space-y-2.5">
+            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
+              {lang === 'kk' || lang === 'kz' ? 'Қолдау қызметі' : 'Поддержка'}
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400">
+              {lang === 'kk' || lang === 'kz' ? 'Тұтынушыларға қызмет көрсету:' : 'Служба заботы о клиентах:'}
+            </p>
+            <div className="text-xs font-mono text-zinc-800 dark:text-zinc-300">
+              support@qazaqmarket.kz
+            </div>
+            <div className="text-xs text-zinc-500 dark:text-zinc-400">
+              Қазақстан, Алматы / Астана
+            </div>
+          </div>
+
+          {/* Row 2, Col 2 (Bottom-Right): Sellers & Partners / Партнерам */}
           <div className="space-y-2.5">
             <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
               {lang === 'kk' || lang === 'kz' ? 'Серіктестерге' : 'Партнерам'}
@@ -62,34 +90,6 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
             </ul>
-          </div>
-
-          {/* Row 2, Col 1: About */}
-          <div className="space-y-3">
-            <div className="text-sm font-black tracking-tight text-zinc-950 dark:text-white uppercase">
-              QazaqMarket
-            </div>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
-              {lang === 'kk' || lang === 'kz'
-                ? 'Қазақстанның жетекші кітап маркетплейсі. Ұлттық классика, әлемдік бестселлерлер мен ресми баспалардан тікелей жеткізу.'
-                : 'Главный книжный маркетплейс Казахстана. Классическая и современная казахская, мировая и деловая литература с быстрой доставкой во все регионы страны.'}
-            </p>
-          </div>
-
-          {/* Row 2, Col 2: Contacts & Support */}
-          <div className="space-y-2.5">
-            <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
-              {lang === 'kk' || lang === 'kz' ? 'Қолдау қызметі' : 'Поддержка'}
-            </div>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              {lang === 'kk' || lang === 'kz' ? 'Тұтынушыларға қызмет көрсету:' : 'Служба заботы о клиентах:'}
-            </p>
-            <div className="text-xs font-mono text-zinc-800 dark:text-zinc-300">
-              support@qazaqmarket.kz
-            </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">
-              Қазақстан, Алматы / Астана
-            </div>
           </div>
         </div>
 
